@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolMaster - 100+ Free Online Tools</title>
+    <meta name="description" content="Free online tools for everyone. Text, image, PDF, calculator, developer tools. No signup required.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 16px; padding: 40px; }
+        h1 { color: #333; font-size: 3em; margin-bottom: 10px; }
+        .tagline { color: #666; font-size: 1.3em; margin-bottom: 40px; }
+        .search { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 18px; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .tool-card { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 25px; border-radius: 12px; text-decoration: none; color: #333; transition: transform 0.2s; text-align: center; }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .tool-icon { font-size: 2.5em; margin-bottom: 10px; }
+        .tool-name { font-weight: bold; margin-bottom: 5px; }
+        .tool-desc { font-size: 0.85em; color: #666; }
+        .ad-slot { margin: 30px 0; padding: 20px; background: #fafafa; border-radius: 8px; text-align: center; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ ToolMaster</h1>
+        <p class="tagline">100+ Free Online Tools. No Signup. No Limits.</p>
+        
+        <input type="text" class="search" placeholder="🔍 Search tools..." id="search" oninput="filterTools()">
+        
+        <!-- Top Ad -->
+        <div class="ad-slot">
+            <p style="color:#999;">[Ad Space - Google AdSense]</p>
+        </div>
+        
+        <div class="grid" id="toolGrid"></div>
+        
+        <!-- Bottom Ad -->
+        <div class="ad-slot">
+            <p style="color:#999;">[Ad Space - Affiliate Links]</p>
+        </div>
+    </div>
+    
+    <script>
+        const tools = [
+            {name: "Word Counter", icon: "📝", desc: "Count words, characters", file: "word-counter.html"},
+            {name: "Case Converter", icon: "🔤", desc: "UPPER, lower, Title Case", file: "case-converter.html"},
+            {name: "Lorem Ipsum", icon: "📄", desc: "Generate placeholder text", file: "lorem-ipsum.html"},
+            {name: "Reverse Text", icon: "🔄", desc: "Reverse any text", file: "reverse-text.html"},
+            {name: "Text Diff", icon: "🔍", desc: "Compare two texts", file: "text-diff.html"},
+            {name: "Readability Score", icon: "📊", desc: "Check reading difficulty", file: "readability.html"},
+            {name: "Image Compressor", icon: "🖼️", desc: "Reduce image size", file: "image-compressor.html"},
+            {name: "Image Resizer", icon: "📏", desc: "Resize images", file: "image-resizer.html"},
+            {name: "Color Picker", icon: "🎨", desc: "Pick colors", file: "color-picker.html"},
+            {name: "JSON Formatter", icon: "📋", desc: "Format JSON data", file: "json-formatter.html"},
+            {name: "Base64 Encoder", icon: "🔐", desc: "Encode/decode base64", file: "base64-encoder.html"},
+            {name: "URL Encoder", icon: "🔗", desc: "Encode URLs", file: "url-encoder.html"},
+            {name: "Password Gen", icon: "🔑", desc: "Strong passwords", file: "password-gen.html"},
+            {name: "QR Code Gen", icon: "📱", desc: "Generate QR codes", file: "qr-generator.html"},
+            {name: "Mortgage Calc", icon: "🏠", desc: "Calculate mortgage", file: "mortgage-calc.html"},
+            {name: "BMI Calc", icon: "⚖️", desc: "Body mass index", file: "bmi-calc.html"},
+            {name: "Age Calc", icon: "🎂", desc: "Calculate age", file: "age-calc.html"},
+            {name: "Tip Calc", icon: "💵", desc: "Calculate tips", file: "tip-calc.html"},
+            {name: "Currency Conv", icon: "💱", desc: "Convert currencies", file: "currency-converter.html"},
+            {name: "Unit Conv", icon: "📐", desc: "Convert units", file: "unit-converter.html"},
+            {name: "PDF Merger", icon: "📑", desc: "Combine PDFs", file: "pdf-merge.html"},
+            {name: "PDF Compress", icon: "📉", desc: "Reduce PDF size", file: "pdf-compress.html"},
+            {name: "Resume Builder", icon: "💼", desc: "Build resumes", file: "resume-builder.html"},
+            {name: "Invoice Gen", icon: "🧾", desc: "Create invoices", file: "invoice-gen.html"},
+            {name: "Meme Maker", icon: "😂", desc: "Create memes", file: "meme-maker.html"},
+            {name: "Fake Chat", icon: "💬", desc: "Fake chat maker", file: "fake-chat.html"},
+            {name: "Name Gen", icon: "👤", desc: "Generate names", file: "name-generator.html"},
+            {name: "UUID Gen", icon: "🆔", desc: "Unique IDs", file: "uuid-generator.html"},
+            {name: "Hash Gen", icon: "#️⃣", desc: "MD5, SHA256", file: "hash-generator.html"},
+            {name: "Random Num", icon: "🎲", desc: "Random numbers", file: "random-number.html"},
+            {name: "Coin Flip", icon: "🪙", desc: "Flip coin", file: "coin-flip.html"},
+            {name: "Dice Roller", icon: "🎲", desc: "Roll dice", file: "dice-roller.html"},
+            {name: "Stopwatch", icon: "⏱️", desc: "Online stopwatch", file: "stopwatch.html"},
+            {name: "Countdown", icon: "⏰", desc: "Countdown timer", file: "countdown.html"},
+            {name: "Age Calc", icon: "📅", desc: "Calculate age", file: "age-calc.html"},
+            {name: "Date Diff", icon: "📆", desc: "Days between dates", file: "date-diff.html"},
+            {name: "Color Palette", icon: "🎨", desc: "Color palettes", file: "palette-gen.html"},
+            {name: "Gradient Gen", icon: "🌈", desc: "CSS gradients", file: "gradient-gen.html"},
+            {name: "HEX to RGB", icon: "🎨", desc: "Convert colors", file: "hex-to-rgb.html"},
+            {name: "Word Unscramble", icon: "🔤", desc: "Unscramble words", file: "word-unscramble.html"},
+            {name: "GPA Calc", icon: "🎓", desc: "Calculate GPA", file: "gpa-calc.html"},
+            {name: "Calorie Calc", icon: "🍎", desc: "Daily calories", file: "calorie-calc.html"},
+            {name: "Compound Int", icon: "📈", desc: "Investment growth", file: "compound-interest.html"},
+            {name: "ROI Calc", icon: "💰", desc: "Return on investment", file: "roi-calc.html"},
+            {name: "Crypto Profit", icon: "₿", desc: "Crypto gains", file: "crypto-profit.html"},
+            {name: "Domain Check", icon: "🌐", desc: "Check domains", file: "domain-checker.html"},
+            {name: "IP Lookup", icon: "📍", desc: "Find IP location", file: "ip-lookup.html"},
+            {name: "Speed Test", icon: "🚀", desc: "Internet speed", file: "speed-test.html"},
+            {name: "AI Writer", icon: "🤖", desc: "AI text writer", file: "ai-writer.html"},
+            {name: "AI Translator", icon: "🌍", desc: "Translate text", file: "ai-translator.html"},
+            {name: "AI Summarizer", icon: "📝", desc: "Summarize text", file: "ai-summarizer.html"},
+            {name: "Email Writer", icon: "📧", desc: "Write emails", file: "ai-email.html"},
+        ];
+        
+        function renderTools(filter = '') {
+            const grid = document.getElementById('toolGrid');
+            grid.innerHTML = '';
+            const filtered = tools.filter(t => 
+                t.name.toLowerCase().includes(filter.toLowerCase()) ||
+                t.desc.toLowerCase().includes(filter.toLowerCase())
+            );
+            filtered.forEach(t => {
+                grid.innerHTML += `
+                    <a href="${t.file}" class="tool-card">
+                        <div class="tool-icon">${t.icon}</div>
+                        <div class="tool-name">${t.name}</div>
+                        <div class="tool-desc">${t.desc}</div>
+                    </a>
+                `;
+            });
+        }
+        
+        function filterTools() {
+            const q = document.getElementById('search').value;
+            renderTools(q);
+        }
+        
+        renderTools();
+    </script>
+</body>
+</html>
